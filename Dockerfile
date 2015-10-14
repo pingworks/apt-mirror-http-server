@@ -1,9 +1,9 @@
 FROM ubuntu:14.04
-MAINTAINER Terry Chen <seterrychen@gmail.com>
+MAINTAINER Christoph Lukas <christoph.lukas@gmx.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TIMEOUT 12h
-ENV MIRROR_URL http://tw.archive.ubuntu.com/ubuntu
+ENV MIRROR_URL http://ftp.stw-bonn.de/ubuntu
 
 RUN \
   apt-get update && \
@@ -15,5 +15,5 @@ RUN \
 EXPOSE 80
 COPY setup.sh /setup.sh
 
-VOLUME ["/etc/apt", "/var/spool/apt-mirror"]
+VOLUME ["/etc/apt"]
 CMD ["/bin/bash", "setup.sh"]

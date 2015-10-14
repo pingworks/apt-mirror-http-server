@@ -14,6 +14,15 @@ function create_link {
     done
 }
 
+function wait_for_mount {
+    local mnt="$1"
+
+    while ! grep $mnt /proc/mounts >/dev/null; do
+        printf "\n\n====== Waiting for mount: $mnt ======\n\n"
+        sleep 30s
+    done
+}
+
 # read mirror.list to link /var/www/package folder
 mkdir /var/www/package
 sed -i '12s|DocumentRoot /var/www/html|DocumentRoot /var/www/package|' /etc/apache2/sites-enabled/000-default.conf
@@ -29,6 +38,7 @@ if [ ! -e /etc/apt/mirror.list ]; then
     need_create_line=false
 fi
 
+wait_for_mount /var/spool/apt-mirror
 while true; do
     if $need_create_line; then
         create_link
