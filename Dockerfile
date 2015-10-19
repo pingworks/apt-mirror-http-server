@@ -1,9 +1,7 @@
-FROM ubuntu:14.04
+FROM pingworks/docker-ws-baseimg:0.2
 MAINTAINER Christoph Lukas <christoph.lukas@gmx.net>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TIMEOUT 12h
-ENV MIRROR_URL http://ftp.stw-bonn.de/ubuntu
 
 RUN \
   apt-get update && \
@@ -13,7 +11,10 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80
+EXPOSE 22
+
 COPY setup.sh /setup.sh
+COPY rc.local /etc/rc.local
 
 VOLUME ["/etc/apt"]
-CMD ["/bin/bash", "setup.sh"]
+CMD ["/sbin/init"]

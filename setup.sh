@@ -1,4 +1,8 @@
 #!/bin/bash
+
+MIRROR_URL=${MIRROR_URL:-"http://ftp.stw-bonn.de/ubuntu"}
+TIMEOUT=${TIMEOUT:-"12h"}
+
 function create_link {
     # parse mirror.list to share under /var/www/package path
     for i in `egrep -o '(rsync|ftp|https?)://[^ ]+' /etc/apt/mirror.list`; do
